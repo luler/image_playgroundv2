@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   app:
@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
+    volumes:
+      - .:/app
     ports:
       - 7862:7862
     environment:
