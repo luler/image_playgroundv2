@@ -11,5 +11,5 @@ services:
       - .:/app
     ports:
       - 7862:7862
-    environment:
-      - REPLICATE_API_KEY=
+#    environment:
+#      - REPLICATE_API_KEY=
