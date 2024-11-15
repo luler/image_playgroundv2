@@ -7,15 +7,14 @@ import dotenv
 import gradio as gr
 import requests
 from PIL import Image
+from googletrans import Translator
+
+os.environ["no_proxy"] = "localhost,127.0.0.1,::1"
 
 
 def translate(text):
-    response = requests.get('https://lingva.thedaviddelta.com/api/v1/auto/en/' + text)
-    text = ''
-    if response.status_code == 200:
-        data = response.json()
-        text = data['translation']
-    return text
+    translator = Translator(timeout=10)
+    return translator.translate(text, dest='en').text
 
 
 def playground_v2(text):
@@ -63,6 +62,7 @@ if __name__ == "__main__":
     ii = gr.Textbox(label='图片描述')
     oo = gr.Image(label='生成的图片')
 
-    demo = gr.Interface(dosomething, inputs=ii, outputs=oo, title='基于playground-v2模型的图片生成')
+    demo = gr.Interface(dosomething, inputs=ii, outputs=oo, title='基于playground-v2模型的图片生成',
+                        allow_flagging='never')
 
-    demo.launch(server_name='0.0.0.0', server_port=7862)
+    demo.launch(server_name='0.0.0.0', server_port=7862, share=True)
